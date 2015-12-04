@@ -38,9 +38,11 @@ def generate_text(n, one, two, three, reverse_index, index):
     return ret
 
 def start_upper(text):
-    for i in xrange(len(text)):
+    i = 1
+    while i < len(text):
         if text[i] in finish:
             text = text[:i - 1] + text[i: i + 2] + text[i + 2].upper() + text[i+3:]
+        i += 1
     return text[0].upper() + text[1:]
 
 with open('oneword.pickle', 'rb') as handle:

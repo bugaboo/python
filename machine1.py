@@ -8,7 +8,7 @@ import pickle
 def parse(folder):
     oneword = {1: 1, 2: 1, 3: 1}
     twoword = {2: {1: 1}, 1: {3: 1}}
-    threeword = {2: {(1, 3): 1}}
+    threeword = {(2,1):{3: 1}}
     index = {u'the': 1, u'close': 2, u'door': 3}
     book = open('1.txt')
 #    get_counts(cleantext(book.read().decode('utf8')), oneword, twoword, threeword, index)
@@ -44,13 +44,13 @@ def get_counts(text, oneword, twoword, threeword, index):
                 twoword[prev][cur_index] = 1
         else:
             twoword[prev] = {cur_index: 1}
-        if nextprev in threeword:
-            if (prev, cur_index) in threeword[nextprev]:
-                threeword[nextprev][(prev, cur_index)] += 1
+        if (nextprev, prev) in threeword:
+            if cur_index in threeword[(nextprev, prev)]:
+                threeword[(nextprev, prev)][cur_index] += 1
             else:
-                threeword[nextprev][(prev, cur_index)] = 1
+                threeword[(nextprev, prev)][cur_index] = 1
         else:
-            threeword[nextprev] = {(prev, cur_index): 1}
+            threeword[(nextprev, prev)] = {cur_index: 1}
         nextprev = prev
         prev = cur_index
         
